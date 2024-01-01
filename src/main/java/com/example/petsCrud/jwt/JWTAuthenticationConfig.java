@@ -1,4 +1,4 @@
-package com.example.petsCrud.config;
+package com.example.petsCrud.jwt;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -36,7 +36,7 @@ public class JWTAuthenticationConfig {
                                 .collect(Collectors.toList()))
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 864_000_000))
-                .signWith(getSigningKey("ZnJhc2VzbGFyZ2FzcGFyYWNvbG9jYXJjb21vY2xhdmVlbnVucHJvamVjdG9kZWVtZXBsb3BhcmFqd3Rjb25zcHJpbmdzZWN1cml0eQ"),  SignatureAlgorithm.HS512).compact();
+                .signWith(getSigningKey(Constants.SUPER_SECRET_KEY),  SignatureAlgorithm.HS512).compact();
 
         return  "Bearer "+token;
     }

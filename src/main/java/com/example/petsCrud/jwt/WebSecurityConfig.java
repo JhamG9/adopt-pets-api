@@ -1,4 +1,4 @@
-package com.example.petsCrud.config;
+package com.example.petsCrud.jwt;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -23,7 +23,7 @@ class WebSecurityConfig{
                 .csrf((csrf) -> csrf
                         .disable())
                 .authorizeHttpRequests( authz -> authz
-                        .requestMatchers(HttpMethod.POST,"auth").permitAll()
+                        .requestMatchers(HttpMethod.POST,Constants.AUTH_URL).permitAll()
                         .anyRequest().authenticated())
                 .addFilterAfter(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
 

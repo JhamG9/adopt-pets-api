@@ -1,4 +1,4 @@
-package com.example.petsCrud.config;
+package com.example.petsCrud.jwt;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
@@ -29,11 +29,11 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 
     private Claims setSigningKey(HttpServletRequest request) {
         String jwtToken = request.
-                getHeader("Authorization").
-                replace("Bearer ", "");
+                getHeader(Constants.HEADER_AUTHORIZACION_KEY).
+                replace(Constants.TOKEN_BEARER_PREFIX, "");
 
         return Jwts.parserBuilder()
-                .setSigningKey(getSigningKey("ZnJhc2VzbGFyZ2FzcGFyYWNvbG9jYXJjb21vY2xhdmVlbnVucHJvamVjdG9kZWVtZXBsb3BhcmFqd3Rjb25zcHJpbmdzZWN1cml0eQ"))
+                .setSigningKey(getSigningKey(Constants.SUPER_SECRET_KEY))
                 .build()
                 .parseClaimsJws(jwtToken)
                 .getBody();
@@ -46,14 +46,12 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
         UsernamePasswordAuthenticationToken auth =
                 new UsernamePasswordAuthenticationToken(claims.getSubject(), null,
                         authorities.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList()));
-
         SecurityContextHolder.getContext().setAuthentication(auth);
-
     }
 
     private boolean isJWTValid(HttpServletRequest request, HttpServletResponse res) {
-        String authenticationHeader = request.getHeader("Authorization");
-        if (authenticationHeader == null || !authenticationHeader.startsWith("Bearer "))
+        String authenticationHeader = request.getHeader(Constants.HEADER_AUTHORIZACION_KEY);
+        if (authenticationHeader == null || !authenticationHeader.startsWith(Constants.TOKEN_BEARER_PREFIX))
             return false;
         return true;
     }

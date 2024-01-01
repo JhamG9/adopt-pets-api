@@ -15,7 +15,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-
     @GetMapping
     public ArrayList<UserModel> getUsers() {
         return this.userService.getUsers();
@@ -25,5 +24,6 @@ public class UserController {
     public UserModel saveUser(@RequestBody UserModel userRequest){
         return this.userService.saveUser(userRequest);
     }
+
 
 }

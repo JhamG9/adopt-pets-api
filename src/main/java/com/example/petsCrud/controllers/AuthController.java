@@ -1,6 +1,6 @@
 package com.example.petsCrud.controllers;
 
-import com.example.petsCrud.config.JWTAuthenticationConfig;
+import com.example.petsCrud.jwt.JWTAuthenticationConfig;
 import com.example.petsCrud.dto.JwtDto;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -23,5 +23,4 @@ public class AuthController {
 
         return jwtDtoToken;
     }
-
 }
